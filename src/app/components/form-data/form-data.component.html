@@ -1,0 +1,189 @@
+<h4>Formularios <small>template</small></h4>
+<hr>
+<form [formGroup]="form"
+novalidate="novalidate"
+(ngSubmit)="sendForm()"
+ >
+
+  <div>
+
+    <div class="form-group row">
+      <label style="margin-left:50px" class="col-2 col-form-label">Nombre</label>
+      <div class="col-8">
+
+        <input class="form-control"
+        [ngClass]="{ 'error':!form.get('nombre').valid && form.controls['nombre'].touched }"
+               type="text"
+               formControlName="nombre"
+               placeholder="Nombre">
+               <div class="label"
+               *ngIf="form.controls['nombre'].errors?.required && form.controls['nombre'].touched">
+                 <span
+                 [ngClass]="{ 'error-label':form.controls['nombre'].errors?.required }">
+                     El campo es requerido
+                 </span>
+               </div>
+               <div class="label"
+               *ngIf="form.controls['nombre'].errors?.minlength">
+                 <span
+                 [ngClass]="{ 'error-label':form.controls['nombre'].errors?.minlength }">
+                     El campo debe tener por lo menos 5 caracterés
+                 </span>
+               </div>
+      </div>
+
+    </div>
+
+    <div class="form-group row">
+      <label style="margin-left:50px" class="col-2 col-form-label">Apellido</label>
+      <div class="col-8">
+
+        <input class="form-control"
+        [ngClass]="{ 'error':!form.get('apellido').valid && form.controls['apellido'].touched }"
+               formControlName="apellido"
+               type="text"
+               placeholder="Apellido">
+               <div class="label"
+               *ngIf="form.controls['apellido'].errors?.required && form.controls['apellido'].touched">
+                 <span
+                 *ngIf="form.controls['apellido'].errors?.required"
+                 [ngClass]="{ 'error-label':form.controls['apellido'].errors?.required }">
+                     El campo es requerido
+                 </span>
+               </div>
+               <div class="label"
+               *ngIf="form.controls['apellido'].errors?.minlength">
+                 <span
+                 [ngClass]="{ 'error-label':form.controls['apellido'].errors?.minlength }">
+                     El campo debe tener por lo menos 5 caracterés
+                 </span>
+               </div>
+
+      </div>
+    </div>
+
+  </div>
+<!--
+
+Cuando sean objetos dentro de uno en el Component
+Se encierra dicho grupo en un [formGroup]
+y para acceder a su controlador sería
+
+form.get('Object.item').errors?.validator
+
+Segunda forma
+form.controls['objectParent'].controls['children'].errors?.validator
+-->
+  <div class="form-group row">
+    <label style="margin-left:50px" class="col-2 col-form-label">Correo</label>
+    <div class="col-md-8">
+
+      <input class="form-control"
+            formControlName="correo"
+            [ngClass]="{ 'error':!form.get('correo').valid && form.controls['correo'].touched }"
+             type="email"
+             placeholder="Correo electrónico">
+             <div  class="label"
+             *ngIf="form.controls['correo'].errors?.required && form.controls['correo'].touched">
+               <span
+               [ngClass]="{ 'error-label':form.controls['correo'].errors?.required }">
+                   El campo es requerido
+               </span>
+             </div>
+             <div class="label"
+             *ngIf="form.controls['correo'].errors?.pattern">
+               <span
+               [ngClass]="{ 'error-label':form.controls['correo'].errors?.pattern }">
+                   El campo debe tener un formato de correo valido
+               </span>
+             </div>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label style="margin-left:50px" class="col-2 col-form-label">
+      Usuario
+    </label>
+    <div class="col-8">
+      <input class="form-control"
+            formControlName="username"
+            [ngClass]="{ 'error':!form.get('username').valid && form.controls['username'].touched }"
+             type="text"
+             placeholder="Introduce tu usuario">
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label style="margin-left:50px" class="col-2 col-form-label">
+      Password
+    </label>
+    <div class="col-8">
+      <input class="form-control"
+            formControlName="password"
+            [ngClass]="{ 'error':!form.get('password').valid && form.controls['password'].touched }"
+             type="password"
+             placeholder="Introduce tu contrasena">
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label style="margin-left:50px" class="col-2 col-form-label">
+      Confirmar Password
+    </label>
+    <div class="col-8">
+      <input class="form-control"
+            formControlName="password2"
+            [ngClass]="{ 'error':!form.get('password2').valid && form.controls['password2'].touched }"
+             type="password"
+             placeholder="Confirmar contrasena">
+    </div>
+  </div>
+
+
+
+
+
+  <div class="form-group row">
+    <label style="margin-left:50px" class="col-2 col-form-label">
+      Habilidades
+    </label>
+    <div formArrayName="skills"  class="col-md-8">
+      <input
+      *ngFor="let skill of form.controls['skills'].controls;let collector = index"
+      type="text"
+      value="Correr"
+      [formControlName]="collector"
+      >
+
+      <button
+      class="btn btn-primary"
+      type="button"
+      (click)="addSkill()">
+        Agregar habilidad
+      </button>
+    </div>
+  </div>
+
+
+
+
+
+
+  <div class="form-group row">
+    <label class="col-2 col-form-label">&nbsp;</label>
+    <div class="input-group col-md-8">
+      <button
+      type="submit"
+      class="btn btn-outline-primary"
+      [disabled]="!form.valid">
+        Guardar
+      </button>
+    </div>
+  </div>
+
+  {{ form.valid }}
+  <br>
+  {{ form.status }}
+
+
+</form>

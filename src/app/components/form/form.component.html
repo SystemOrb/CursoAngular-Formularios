@@ -1,0 +1,111 @@
+
+  <h4>Formularios <small>template</small></h4>
+    <hr>
+    <form class="needs-validation" novalidate="novalidate"
+     #forma="ngForm"
+     (ngSubmit)="guardar(forma)"
+     class="needs-validation">
+      <div>
+        <div style="" class="form-group row">
+          <label style="margin-left:50px" class="col-2 col-form-label">Nombre</label>
+          <div class="col-8">
+            <input class="form-control"
+                  [ngClass]="{ 'error':evaluation.errors?.minlength || evaluation.errors?.required && evaluation.touched }"
+                   type="text"
+                   name="nombre"
+                   required
+                   ngModel
+                   minlength="5"
+                   placeholder="Nombre"
+                   #evaluation="ngModel"
+                   >
+                   <div class="label"
+                   *ngIf="evaluation.errors?.required">
+                     <span [ngClass]="{ 'error-label':evaluation.errors?.required }">
+                     El campo es requerido
+                   </span>
+                   </div>
+                   <div class="label"
+                   *ngIf="evaluation.errors?.minlength">
+                     <span [ngClass]="{ 'error-label':evaluation.errors?.minlength }">
+                       Por lo menos {{ evaluation.errors.minlength.requiredLength }} caracterés
+                     </span>
+                   </div>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label style="margin-left:50px" class="col-2 col-form-label">Apellido</label>
+          <div class="col-8">
+
+            <input class="form-control"
+            [ngClass]="{ 'error':ape.errors?.minlength || ape.errors?.required && ape.touched }"
+                   type="text"
+                   required
+                   name="apellido"
+                   ngModel
+                   minlength="5"
+                   placeholder="Apellido"
+                   #ape="ngModel">
+                   <div class="label"
+                   *ngIf="ape.errors?.required">
+                     <span [ngClass]="{ 'error-label':ape.errors?.required }">
+                     El campo es requerido
+                   </span>
+                   </div>
+                   <div class="label"
+                   *ngIf="ape.errors?.minlength">
+                     <span [ngClass]="{ 'error-label':ape.errors?.minlength }">
+                       Por lo menos {{ ape.errors.minlength.requiredLength }} caracterés
+                     </span>
+                   </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="form-group row">
+        <label style="margin-left:50px" class="col-2 col-form-label">Correo</label>
+        <div class="col-md-8">
+
+          <input class="form-control has-danger"
+          [ngClass]="{ 'error':email.errors?.required || email.errors?.pattern && email.touched }"
+                 type="email"
+                 name="email"
+                 placeholder="Correo electrónico"
+                 required
+                 ngModel
+                 pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
+                 #email="ngModel"
+                 >
+                 <div
+                 *ngIf="email.errors?.required">
+                   <span [ngClass]="{ 'error-label':email.errors?.required }" >
+                     El campo es requerido
+                   </span>
+                 </div>
+                 <div
+                 *ngIf="email.errors?.pattern">
+                   <span
+                   [ngClass]="{ 'error-label':email.errors?.pattern }">
+                     Por favor introduce un correo electrónico valido
+                   </span>
+                 </div>
+        </div>
+      </div>
+
+
+
+      <div class="form-group row">
+        <label class="col-2 col-form-label">&nbsp;</label>
+        <div class="input-group col-md-8">
+          <button
+          [disabled]="!forma.valid"
+          type="submit"
+          class="btn btn-outline-primary">
+            Guardar
+          </button>
+        </div>
+      </div>
+
+    </form>
